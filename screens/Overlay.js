@@ -23,11 +23,10 @@ export default function Overlay() {
 }
 
 const styles = StyleSheet.create({
-  overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
   centerRow: {
     flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   scanner: {
     position: 'relative',
@@ -62,4 +61,4 @@ const styles = StyleSheet.create({
     borderRightWidth: 3,
     borderBottomWidth: 3,
   },
-}); 
+});

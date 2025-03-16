@@ -13,6 +13,7 @@ const Overlay = lazy(() => import('./Overlay'));
 export default function LoginScreen({ navigation }) {
   const [permission, requestPermission] = useCameraPermissions();
   const [showScanner, setShowScanner] = useState(false);
+  const [torch, setTorch] = useState(false);
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
   const qrLock = useRef(false);
@@ -108,64 +109,6 @@ export default function LoginScreen({ navigation }) {
     }
   };
 
-  const LoginForm = () => {
-    const [localUserId, setLocalUserId] = useState(userId);
-    const [localPassword, setLocalPassword] = useState(password);
-
-    const handleLocalLogin = () => {
-      setUserId(localUserId);
-      setPassword(localPassword);
-      handleLogin();
-    };
-
-    return (
-      <View style={styles.formContainer}>
-        <Text style={styles.title}>Login</Text>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.inputWithIcon}
-            placeholder="User ID"
-            value={localUserId}
-            onChangeText={setLocalUserId}
-            editable={true}
-            autoCapitalize="none"
-            autoCorrect={false}
-            keyboardType="email-address"
-          />
-          {Platform.OS !== 'web' && (
-            <TouchableOpacity
-              style={styles.qrIconButton}
-              onPress={() => {
-                requestPermission();
-                setShowScanner(true);
-              }}
-            >
-              <MaterialCommunityIcons name="qrcode-scan" size={24} color="#666" />
-            </TouchableOpacity>
-          )}
-        </View>
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          value={localPassword}
-          onChangeText={setLocalPassword}
-          secureTextEntry
-          autoCapitalize="none"
-          autoCorrect={false}
-        />
-        <TouchableOpacity style={styles.loginButton} onPress={handleLocalLogin}>
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.forgotPasswordButton}
-          onPress={() => navigation.navigate('ForgotPassword')}
-        >
-          <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  };
-
   if (Platform.OS !== 'web' && permission === null) {
     return (
       <View style={styles.container}>
@@ -182,21 +125,80 @@ export default function LoginScreen({ navigation }) {
             style={StyleSheet.absoluteFillObject}
             facing="back"
             onBarcodeScanned={({ data }) => handleBarCodeScanned(data)}
+            enableTorch={torch}
+            barcodeScannerSettings={{
+              barCodeTypes: ["qr"],
+            }}
           />
           {Platform.OS !== 'web' && (
             <Suspense fallback={null}>
               <Overlay />
             </Suspense>
           )}
-          <TouchableOpacity
-            style={styles.cancelButton}
-            onPress={() => setShowScanner(false)}
-          >
-            <Text style={styles.buttonText}>Cancel</Text>
-          </TouchableOpacity>
+          <View style={styles.scannerControls}>
+            <TouchableOpacity
+              style={styles.torchButton}
+              onPress={() => setTorch(!torch)}
+            >
+              <MaterialCommunityIcons 
+                name={torch ? "flashlight" : "flashlight-off"} 
+                size={24} 
+                color="white" 
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.cancelButton}
+              onPress={() => setShowScanner(false)}
+            >
+              <Text style={styles.buttonText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       ) : (
-        <LoginForm />
+        <View style={styles.formContainer}>
+          <Text style={styles.title}>Login</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.inputWithIcon}
+              placeholder="User ID"
+              value={userId}
+              onChangeText={setUserId}
+              editable={true}
+              autoCapitalize="none"
+              autoCorrect={false}
+              keyboardType="email-address"
+            />
+            {Platform.OS !== 'web' && (
+              <TouchableOpacity
+                style={styles.qrIconButton}
+                onPress={() => {
+                  requestPermission();
+                  setShowScanner(true);
+                }}
+              >
+                <MaterialCommunityIcons name="qrcode-scan" size={24} color="#666" />
+              </TouchableOpacity>
+            )}
+          </View>
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+          <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+            <Text style={styles.buttonText}>Login</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.forgotPasswordButton}
+            onPress={() => navigation.navigate('ForgotPassword')}
+          >
+            <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+          </TouchableOpacity>
+        </View>
       )}
     </View>
   );
@@ -292,14 +294,13 @@ const styles = StyleSheet.create({
     bottom: 20,
     left: 20,
     right: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
   },
   torchButton: {
     backgroundColor: 'rgba(0,0,0,0.6)',
     padding: 15,
     borderRadius: 50,
+    marginBottom: 100,
   },
   cameraWrapper: {
     flex: 1,

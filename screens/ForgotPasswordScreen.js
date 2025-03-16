@@ -6,11 +6,13 @@ import { sendPasswordResetEmail } from 'firebase/auth';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useCameraPermissions } from 'expo-camera';
 import { CameraView } from 'expo-camera';
+import Overlay from './Overlay';
 
 export default function ForgotPasswordScreen({ navigation }) {
   const [userId, setUserId] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [showScanner, setShowScanner] = useState(false);
+  const [torch, setTorch] = useState(false);
   const [permission, requestPermission] = useCameraPermissions();
 
   const handleSendCode = async () => {
@@ -48,13 +50,30 @@ export default function ForgotPasswordScreen({ navigation }) {
             style={StyleSheet.absoluteFillObject}
             facing="back"
             onBarcodeScanned={({ data }) => handleBarCodeScanned(data)}
+            enableTorch={torch}
+            barcodeScannerSettings={{
+              barCodeTypes: ["qr"],
+            }}
           />
-          <TouchableOpacity
-            style={styles.cancelButton}
-            onPress={() => setShowScanner(false)}
-          >
-            <Text style={styles.buttonText}>Cancel</Text>
-          </TouchableOpacity>
+          <Overlay />
+          <View style={styles.scannerControls}>
+            <TouchableOpacity
+              style={styles.torchButton}
+              onPress={() => setTorch(!torch)}
+            >
+              <MaterialCommunityIcons 
+                name={torch ? "flashlight" : "flashlight-off"} 
+                size={24} 
+                color="white" 
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.cancelButton}
+              onPress={() => setShowScanner(false)}
+            >
+              <Text style={styles.buttonText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       ) : (
         <>
@@ -214,6 +233,19 @@ const styles = StyleSheet.create({
   scannerContainer: {
     flex: 1,
     backgroundColor: 'black',
+  },
+  scannerControls: {
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    right: 20,
+    alignItems: 'center',
+  },
+  torchButton: {
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    padding: 15,
+    borderRadius: 50,
+    marginBottom: 100,
   },
   cancelButton: {
     backgroundColor: '#f44336',
