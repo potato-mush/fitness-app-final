@@ -143,11 +143,10 @@ const styles = StyleSheet.create({
     elevation: 5, // for Android shadow
   },
   baseStatText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
-    textAlign: 'center',
-    flex: 1,
-    marginTop: 5,
+    marginLeft: 10,
+    color: '#333',
   },
   exerciseText: {
     color: '#32CD32',
@@ -157,27 +156,21 @@ const styles = StyleSheet.create({
   },
   xpText: {
     color: '#d59ee4',
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
-    marginTop: 10,
-    textAlign: 'center',
-    flex: 1,
+    marginLeft: 10,
   },
   coinsText: {
     color: '#FFA500',
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
-    marginTop: 5,
-    textAlign: 'center',
-    flex: 1,
+    marginLeft: 10,
   },
   staminaText: {
     color: '#D84040',
     fontSize: 18,
     fontWeight: 'bold',
-    marginTop: 5,
-    textAlign: 'center',
-    flex: 1,
+    marginLeft: 10,
   },
   button: {
     backgroundColor: '#32CD32',
@@ -201,13 +194,17 @@ const styles = StyleSheet.create({
   statRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 15,
+    justifyContent: 'flex-start',
+    width: '100%',
+    paddingHorizontal: 10,
   },
   icon: {
     width: 24,
     height: 24,
     resizeMode: 'contain',
-    marginRight: 20,
+  },
+  durationText: {
+    color: '#4682B4',
   },
 });
 

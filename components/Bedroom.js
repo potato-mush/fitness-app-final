@@ -108,12 +108,12 @@ const styles = StyleSheet.create({
     zIndex: 3, // Blanket is above the bed
   },
   avatarImage: {
-    width: "35%", // Avatar takes up 35% of the screen width
-    height: "35%", // Avatar takes up 35% of the screen height
+    width: "30%", // Avatar takes up 35% of the screen width
+    height: "30%", // Avatar takes up 35% of the screen height
     resizeMode: "contain",
     position: "absolute", // Position the avatar absolutely
-    top: "13%", // Position the avatar just above the blanket
-    left: "32%", // Center the avatar horizontally
+    top: "23%", // Position the avatar just above the blanket
+    left: "36%", // Center the avatar horizontally
     zIndex: 2, // Avatar is on top
   },
   toggleButton: {

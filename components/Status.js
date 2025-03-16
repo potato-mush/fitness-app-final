@@ -193,6 +193,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingBottom: 60,
     paddingHorizontal: 16,
+    marginBottom: 50,
   },
   centerRow: {
     justifyContent: "center",

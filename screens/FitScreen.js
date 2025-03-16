@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useState, useEffect } from "react";
-import { Image, Text, TouchableOpacity, View, StyleSheet } from "react-native";
+import { Image, Text, TouchableOpacity, View, StyleSheet, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
@@ -234,21 +234,32 @@ const FitScreen = () => {
     return <Text>Loading...</Text>; // Return a loading screen if data is still being loaded
   }
 
-  // Check if the image is a URL or a local asset
+  // Update the getImageSource function
   const getImageSource = (image) => {
-    if (typeof image === "string" && (image.startsWith("http") || image.startsWith("https"))) {
-      return { uri: image }; // Use URL if it's an external link
+    if (Platform.OS === 'web') {
+      // For web, handle both local and remote images
+      if (typeof image === 'string') {
+        return { uri: image };
+      }
+      return image;
     } else {
-      return image; // Otherwise, assume it's a local asset
+      // For mobile, convert local GIFs to remote URLs if needed
+      if (typeof image === 'string') {
+        return { uri: image };
+      } else if (image && image.uri && image.uri.endsWith('.gif')) {
+        // If it's a local GIF, you might want to host it somewhere and use the URL instead
+        return { uri: image.uri };
+      }
+      return image;
     }
   };
 
   return (
     <SafeAreaView>
-      {/* Use the getImageSource function to determine whether the image is local or external */}
       <Image
         style={{ width: "100%", height: 400 }}
-        source={getImageSource(current?.image)} // Use the getImageSource function here
+        source={getImageSource(current?.image)}
+        resizeMode="contain"
       />
       <Text
         style={{
@@ -375,7 +386,7 @@ const FitScreen = () => {
 const styles = StyleSheet.create({
   timerContainer: {
     position: 'absolute',
-    top: 20,
+    top: 50,
     right: 20,
     backgroundColor: 'rgba(0,0,0,0.7)',
     padding: 10,

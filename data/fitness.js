@@ -2,13 +2,13 @@ export default [
   {
     id: "0",
     image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrEM-6gDUO7g1cdrNhBaqk_0nwxy6ILlIqsQ&usqp=CAU",
+    require("../assets/exercises/full-body.jpg"),
     name: "FULL BODY",
     description: "7x4 CHALLENGE",
     exercises: [
       {
         id: "10",
-        image: require("../assets/exercises/jumping-jack.gif"),
+        image: require("../assets/exercises/chest/jumping-jack.gif"),
         name: "JUMPING JACKS",
         duration: {
           Beginner: 30, // in seconds
@@ -18,7 +18,7 @@ export default [
       },
       {
         id: "11",
-        image: require("../assets/exercises/inclined-pushup.gif"),
+        image: require("../assets/exercises/chest/inclined-pushup.gif"),
         name: "INCLINED PUSH-UPS",
         sets: {
           Beginner: 8,
@@ -28,7 +28,7 @@ export default [
       },
       {
         id: "12",
-        image: require("../assets/exercises/wide-arm-pushup.gif"),
+        image: require("../assets/exercises/chest/wide-arm-pushup.gif"),
         name: "WIDE ARM PUSH-UPS",
         sets: {
           Beginner: 10,
@@ -38,7 +38,7 @@ export default [
       },
       {
         id: "13",
-        image: require("../assets/exercises/cobra-stretch.gif"),
+        image: require("../assets/exercises/chest/cobra-stretch.gif"),
         name: "COBRA STRETCH",
         duration: {
           Beginner: 30, // in seconds
@@ -48,7 +48,7 @@ export default [
       },
       {
         id: "14",
-        image: require("../assets/exercises/chest-stretch.gif"),
+        image: require("../assets/exercises/chest/chest-stretch.gif"),
         name: "CHEST STRETCH",
         duration: {
           Beginner: 30, // in seconds
