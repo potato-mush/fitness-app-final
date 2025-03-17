@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Linking, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import BottomNavigation from "./BottomNavigation"; // Import BottomNavigation component
 import { useNavigation } from "@react-navigation/native";
 import { auth } from '../firebase/config';
+import RatingModal from "../components/RatingModal";
 
 const SettingsScreen = () => {
   const navigation = useNavigation();
+  const [ratingModalVisible, setRatingModalVisible] = useState(false);
 
   // Ensure activeTab is updated when the screen loads
   useEffect(() => {
@@ -31,7 +33,7 @@ const SettingsScreen = () => {
       <View style={styles.settingsContainer}>
         <TouchableOpacity
           style={styles.item}
-          onPress={() => openLink("https://example.com/rate-us")}
+          onPress={() => setRatingModalVisible(true)}
         >
           <Ionicons name="star" size={24} color="#15B392" />
           <Text style={styles.text}>Rate Us</Text>
@@ -39,7 +41,7 @@ const SettingsScreen = () => {
 
         <TouchableOpacity
           style={styles.item}
-          onPress={() => openLink("https://example.com/feedback")}
+          onPress={() => navigation.navigate('Feedback')}
         >
           <Ionicons name="chatbubbles" size={24} color="#15B392" />
           <Text style={styles.text}>Feedback</Text>
@@ -47,7 +49,7 @@ const SettingsScreen = () => {
 
         <TouchableOpacity
           style={styles.item}
-          onPress={() => openLink("https://example.com/privacy-policy")}
+          onPress={() => navigation.navigate('PrivacyPolicy')}
         >
           <Ionicons name="document-text" size={24} color="#15B392" />
           <Text style={styles.text}>Privacy Policy</Text>
@@ -58,7 +60,11 @@ const SettingsScreen = () => {
           <Text style={[styles.text, styles.signOutText]}>Sign Out</Text>
         </TouchableOpacity>
       </View>
-      <BottomNavigation /> {/* Add BottomNavigation component here */}
+      <BottomNavigation />
+      <RatingModal
+        visible={ratingModalVisible}
+        onClose={() => setRatingModalVisible(false)}
+      />
     </View>
   );
 };

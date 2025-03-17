@@ -11,6 +11,8 @@ import AvatarScreen from './screens/AvatarScreen'; // Import AchievementsScreen
 import RewardsScreen from './screens/RewardsScreen';
 import LoginScreen from './screens/LoginScreen';
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen';
+import PrivacyPolicyScreen from './screens/PrivacyPolicyScreen';
+import FeedbackScreen from './screens/FeedbackScreen';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -28,6 +30,8 @@ const StackNavigator = () => {
         <Stack.Screen options={{ headerShown: false }} name="Achievements" component={AchievementsScreen} />
         <Stack.Screen options={{ headerShown: false }} name="Avatar" component={AvatarScreen} />
         <Stack.Screen options={{ headerShown: false }} name="Rewards" component={RewardsScreen} />
+        <Stack.Screen options={{ headerShown: false }} name="PrivacyPolicy" component={PrivacyPolicyScreen} />
+        <Stack.Screen options={{ headerShown: false }} name="Feedback" component={FeedbackScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

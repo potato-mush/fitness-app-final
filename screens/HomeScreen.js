@@ -533,7 +533,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: -10, // Align it to the right edge
     bottom: 0, // Position it so that the bottom of the image is aligned with the bottom of the container
-    top: -40, // Allow the image to overflow at the top
+    top: -68, // Allow the image to overflow at the top
     zIndex: 1,
   },
   recommendationImage: {
